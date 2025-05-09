@@ -1,0 +1,22 @@
+FROM python:3.10-slim
+
+# Install ffmpeg and yt-dlp
+RUN apt update && apt install -y ffmpeg curl \
+ && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp \
+ && chmod a+rx /usr/local/bin/yt-dlp
+
+# Set work directory
+WORKDIR /app
+
+# Copy dependencies and install them
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy all app files
+COPY . .
+
+# Expose port for Flask
+EXPOSE 8080
+
+# Run the Flask app using gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
