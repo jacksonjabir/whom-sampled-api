@@ -1,10 +1,12 @@
+from flask import Flask, request, jsonify
+import subprocess
+import os
+
+app = Flask(__name__)
+
 @app.route("/", methods=["GET"])
 def homepage():
     return "🚉 Your Flask webhook is live. Send a POST to use it.", 200
-from flask import Flask, request, jsonify
-import subprocess
-
-app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
 def download_audio():
@@ -31,7 +33,6 @@ def download_audio():
 
     except subprocess.CalledProcessError as e:
         return jsonify({"error": "Download failed", "details": str(e)}), 500
-import os
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
