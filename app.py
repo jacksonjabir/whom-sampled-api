@@ -1,3 +1,6 @@
+@app.route("/", methods=["GET"])
+def homepage():
+    return "🚉 Your Flask webhook is live. Send a POST to use it.", 200
 from flask import Flask, request, jsonify
 import subprocess
 
