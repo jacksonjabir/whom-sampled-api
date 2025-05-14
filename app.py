@@ -1,3 +1,13 @@
+from flask import Flask, request, jsonify
+import subprocess
+import os
+
+app = Flask(__name__)
+
+@app.route("/", methods=["GET"])
+def homepage():
+    return "🚉 Your Flask webhook is live. Send a POST to use it.", 200
+
 @app.route("/", methods=["POST"])
 def download_audio():
     try:
@@ -31,3 +41,7 @@ def download_audio():
     except Exception as e:
         print("🚨 Unexpected error:", e)
         return jsonify({"error": "Internal server error", "details": str(e)}), 500
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
