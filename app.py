@@ -1,3 +1,5 @@
+import sys
+sys.stdout.flush()
 from flask import Flask, request, jsonify
 import subprocess
 import os
