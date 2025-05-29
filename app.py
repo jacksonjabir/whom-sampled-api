@@ -32,17 +32,17 @@ def download_audio():
         original_start = data["original_start"]
         sampled_start = data["sampled_start"]
 
-        subprocess.run([
-            "yt-dlp", "-x", "--audio-format", "mp3", original_url,
-            "--postprocessor-args", f"-ss {original_start} -t 30",
-            "-o", "original_sample.%(ext)s"
-        ], check=True)
+subprocess.run([
+    "yt-dlp", "--cookies", "cookies.txt", "-x", "--audio-format", "mp3", original_url,
+    "--postprocessor-args", f"-ss {original_start} -t 30",
+    "-o", "original_sample.%(ext)s"
+], check=True)
 
-        subprocess.run([
-            "yt-dlp", "-x", "--audio-format", "mp3", sampled_url,
-            "--postprocessor-args", f"-ss {sampled_start} -t 30",
-            "-o", "sampled_track.%(ext)s"
-        ], check=True)
+subprocess.run([
+    "yt-dlp", "--cookies", "cookies.txt", "-x", "--audio-format", "mp3", sampled_url,
+    "--postprocessor-args", f"-ss {sampled_start} -t 30",
+    "-o", "sampled_track.%(ext)s"
+], check=True)
 
         output_video = make_instagram_video()
 
